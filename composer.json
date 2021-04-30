@@ -2,10 +2,18 @@
     "name": "guanguans/yii-log-target",
     "description": "A `yii-log-target` of collection(Slack、DingTalk、Bark、Telegram、Server酱、WeChat、息知). - 集合了多种 `yii-log-target`(Slack、DingTalk、Bark、Telegram、Server酱、WeChat、息知)。",
     "keywords": [
-        "package",
-        "template",
-        "PHP",
-        "skeleton"
+        "yii",
+        "yii2",
+        "log",
+        "log",
+        "target",
+        "Slack",
+        "DingTalk",
+        "Bark",
+        "Telegram",
+        "Server酱",
+        "WeChat",
+        "息知"
     ],
     "homepage": "https://github.com/guanguans/yii-log-target",
     "support": {
