@@ -10,7 +10,7 @@
 
 namespace Guanguans\YiiLogTarget\Tests;
 
-class ChanifyTargetTest extends TestCase
+class TargetTest extends TestCase
 {
     public function testTest()
     {
