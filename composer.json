@@ -1,6 +1,6 @@
 {
     "name": "guanguans/yii-log-target",
-    "description": "A PHP package template repository. - 一个PHP软件包模板存储库。",
+    "description": "A `yii-log-target` of collection(Slack、DingTalk、Bark、Telegram、Server酱、WeChat、息知). - 集合了多种 `yii-log-target`(Slack、DingTalk、Bark、Telegram、Server酱、WeChat、息知)。",
     "keywords": [
         "package",
         "template",
@@ -26,7 +26,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">=5.6",
-        "yiisoft/yii2": "~2.0"
+        "yiisoft/yii2": "~2.0",
+        "yiisoft/yii2-httpclient": "~2.0"
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.7",
@@ -36,6 +37,12 @@
         "phpunit/phpunit": "^7 || ^8",
         "vimeo/psalm": "^3.11"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Guanguans\\YiiLogTarget\\": "src"
@@ -47,7 +54,11 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
     },
     "funding": [
         {

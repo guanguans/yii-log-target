@@ -8,12 +8,12 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\YiiLogTarget;
+namespace Guanguans\YiiLogTarget\Tests;
 
-class PackageSkeleton
+class ChanifyTargetTest extends TestCase
 {
-    public static function test()
+    public function testTest()
     {
-        return true;
+        $this->assertTrue(true);
     }
 }

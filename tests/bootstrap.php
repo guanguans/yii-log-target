@@ -15,4 +15,6 @@ require_once __DIR__.'/../vendor/yiisoft/yii2/Yii.php';
 
 $config = require __DIR__.'/main.php';
 
-// $app = new yii\console\Application($config);
+new yii\console\Application($config);
+
+Yii::warning(sprintf('测试: %s', \Guanguans\YiiLogTarget\ChanifyTarget::class));

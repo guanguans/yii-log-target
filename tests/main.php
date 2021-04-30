@@ -9,7 +9,7 @@
  */
 
 $config = [
-    'id' => 'yii2-dingtalk-app',
+    'id' => 'yii2-log-target-app',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
@@ -17,8 +17,13 @@ $config = [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class' => \yii\log\FileTarget::class,
                     'levels' => ['error', 'warning'],
+                ],
+                [
+                    'class' => \Guanguans\YiiLogTarget\ChanifyTarget::class,
+                    'levels' => ['error', 'warning'],
+                    'token' => 'CIDfh4gGEiJBQVdIWlVKS1JORVY0UlVETFZYVVpRTlNLTlVZVlZPT1JFGhR7vAyf8Uj5UQhhK4n6QfVzih96QyIECAEQAQ',
                 ],
             ],
         ],

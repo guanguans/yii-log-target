@@ -2,7 +2,7 @@
 
 [简体中文](README-CN.md) | [ENGLISH](README.md)
 
-> 一个 PHP 软件包模板存储库。- A PHP package template repository.
+> A `yii-log-target` of collection(Slack、DingTalk、Bark、Telegram、Server 酱、WeChat、息知). - 集合了多种 `yii-log-target`(Slack、DingTalk、Bark、Telegram、Server 酱、WeChat、息知)。
 
 [![Tests](https://github.com/guanguans/yii-log-target/workflows/Tests/badge.svg)](https://github.com/guanguans/yii-log-target/actions)
 [![Check & fix styling](https://github.com/guanguans/yii-log-target/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/yii-log-target/actions)
@@ -21,13 +21,33 @@
 $ composer require guanguans/yii-log-target --prefer-dist -vvv
 ```
 
+## 配置
+
+Yii2 配置文件 `config/main.php` 的日志组件中添加:
+
+``` php
+'log' => [
+    'traceLevel' => YII_DEBUG ? 3 : 0,
+    'targets' => [
+        [
+            'class' => \yii\log\FileTarget::class,
+            'levels' => ['error', 'warning'],
+        ],
+        // Chanify
+        [
+            'class' => \Guanguans\YiiLogTarget\ChanifyTarget::class,
+            'levels' => ['error', 'warning'],
+            'token' => 'CIDfh4gGEiJBQVdIWlVKS1JORVY0UlVETFZYVVpRTlNLTlVZVlZPT1JFGhR7vAyf8Uj5UQhhK4n6QfVzih96QyIECAEQAQ',
+        ],
+    ],
+]
+```
+
 ## 使用
 
-1. 替换 `guanguans/yii-log-target` -> `vendorName/package-name`
-2. 替换 `Guanguans\\YiiLogTarget` -> `VendorName\\PackageName`
-3. 替换 `Guanguans\YiiLogTarget` -> `VendorName\PackageName`
-4. 替换 `ityaozm@gmail.com` -> `your email`
-5. 执行 `$ composer dumpautoload`
+``` php
+Yii::error(sprintf('测试: %s', \Guanguans\YiiLogTarget\ChanifyTarget::class));
+```
 
 ## 测试
 
