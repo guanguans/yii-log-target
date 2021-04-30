@@ -13,12 +13,12 @@ namespace Guanguans\YiiLogTarget;
 use yii\httpclient\Client;
 use yii\log\Target;
 
-class WorkWechatTarget extends Target
+class FeiShuTarget extends Target
 {
     /**
      * @var string
      */
-    public $gateway = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=%s';
+    public $gateway = 'https://open.feishu.cn/open-apis/bot/v2/hook/%s';
 
     /**
      * @var string
@@ -64,9 +64,9 @@ class WorkWechatTarget extends Target
             ->setUrl($this->fullUrl)
             ->setFormat(Client::FORMAT_JSON)
             ->setData([
-                'msgtype' => $this->format,
-                'text' => [
-                    'content' => sprintf('%s: %s', $this->keyword, $content),
+                'msg_type' => $this->format,
+                'content' => [
+                    'text' => sprintf("%s:\n %s", $this->keyword, $content),
                 ],
             ])
             ->send();
