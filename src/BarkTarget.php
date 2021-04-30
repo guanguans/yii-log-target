@@ -71,7 +71,7 @@ content;
         // $content = implode("\n", array_map([$this, 'formatMessage'], $this->messages))."\n";
         $fullUrl = sprintf($this->gateway, $this->secret, $title, $title);
         $data = [
-            'isArchive'         => $this->isArchive,
+            'isArchive' => $this->isArchive,
             'automaticallyCopy' => $this->isAutomaticallyCopy,
         ];
         $this->isEnableCopy && $data['copy'] = $title;
