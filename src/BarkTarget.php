@@ -10,49 +10,21 @@
 
 namespace Guanguans\YiiLogTarget;
 
-use yii\httpclient\Client;
-use yii\log\Target;
+use Guanguans\Notify\Clients\BarkClient;
+use Guanguans\Notify\Messages\BarkMessage;
+use Yii;
 
 class BarkTarget extends Target
 {
     /**
-     * @var string
+     * @var BarkClient
      */
-    public $gateway = 'https://api.day.app/%s/%s/%s';
+    protected $client;
 
     /**
-     * @var string
+     * @var BarkMessage
      */
-    public $secret;
-
-    /**
-     * @var string
-     */
-    public $sound;
-
-    /**
-     * @var int
-     */
-    public $isArchive = 1;
-
-    /**
-     * @var int
-     */
-    public $isAutomaticallyCopy = 0;
-
-    /**
-     * @var int
-     */
-    public $isEnableCopy = 0;
-
-    /**
-     * @var string
-     */
-    public $content = <<<"content"
-``` shell
-%s
-```
-content;
+    protected $message;
 
     /**
      * {@inheritDoc}
@@ -60,28 +32,12 @@ content;
     public function init()
     {
         parent::init();
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function export()
-    {
-        $title = $this->messages[0][0];
-        // $content = implode("\n", array_map([$this, 'formatMessage'], $this->messages))."\n";
-        $fullUrl = sprintf($this->gateway, $this->secret, $title, $title);
-        $data = [
-            'isArchive' => $this->isArchive,
-            'automaticallyCopy' => $this->isAutomaticallyCopy,
-        ];
-        $this->isEnableCopy && $data['copy'] = $title;
-        $this->sound && $data['sound'] = $this->sound;
+        $this->message = Yii::createObject(BarkMessage::class, $this->messageOptions);
+        $this->message->setText($this->getShortLogContext());
 
-        $client = new Client();
-        $client->createRequest()
-            ->setMethod('GET')
-            ->setUrl($fullUrl)
-            ->setData($data)
-            ->send();
+        $this->client = Yii::createObject(BarkClient::class, ['token' => $this->token]);
+        $this->client->setMessage($this->message);
+        $this->baseUri && $this->client->setBaseUri($this->baseUri);
     }
 }

@@ -20,17 +20,10 @@ $config = [
                     'class' => \yii\log\FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
-                // Chanify
                 [
-                    'class' => \Guanguans\YiiLogTarget\ChanifyTarget::class,
+                    'class' => \Guanguans\YiiLogTarget\BarkTarget::class,
                     'levels' => ['error', 'warning'],
-                    'token' => 'CIDfh4gGEiJBQVdIWlVKS1JORVY0UlVETFZYVVpRTlNLTlVZVlZPT1JFGhR7vAyf8Uj5UQhhK4n6QfVzih96QyIECAEQAQ',
-                ],
-                // Server 酱
-                [
-                    'class' => \Guanguans\YiiLogTarget\ServerChanTarget::class,
-                    'levels' => ['error', 'warning'],
-                    'token' => 'SCU75615Tf04742ed61955993cb1cd045505b326f5e0ef51',
+                    'token' => 'ihnPXb8KDj9dHStfQ5c',
                 ],
             ],
         ],
