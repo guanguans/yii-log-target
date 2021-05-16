@@ -11,10 +11,11 @@
 namespace Guanguans\YiiLogTarget;
 
 use Guanguans\Notify\Clients\BarkClient;
-use Guanguans\Notify\Messages\BarkMessage;
+use Guanguans\Notify\Clients\ChanifyClient;
+use Guanguans\Notify\Messages\Chanify\TextMessage;
 use Yii;
 
-class BarkTarget extends Target
+class ChanifyTarget extends Target
 {
     /**
      * @var BarkClient
@@ -22,7 +23,7 @@ class BarkTarget extends Target
     protected $client;
 
     /**
-     * @var BarkMessage
+     * @var \Guanguans\Notify\Messages\Chanify\TextMessage
      */
     protected $message;
 
@@ -33,10 +34,12 @@ class BarkTarget extends Target
     {
         parent::init();
 
-        $this->message = Yii::createObject(BarkMessage::class, $this->messageOptions);
+        $this->message = Yii::createObject(TextMessage::class);
+        $this->message->setOptions($this->messageOptions);
+        $this->message->setOption('title', $this->getShortLogContext());
         $this->message->setOption('text', $this->getLogContext());
 
-        $this->client = Yii::createObject(BarkClient::class);
+        $this->client = Yii::createObject(ChanifyClient::class);
         $this->client->setToken($this->token);
         $this->baseUri && $this->client->setBaseUri($this->baseUri);
         $this->client->setMessage($this->message);

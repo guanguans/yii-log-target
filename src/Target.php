@@ -10,8 +10,16 @@
 
 namespace Guanguans\YiiLogTarget;
 
+use Throwable;
+use yii\helpers\VarDumper;
+
 class Target extends \yii\log\Target
 {
+    /**
+     * @var bool
+     */
+    public $debug = false;
+
     /**
      * @var string
      */
@@ -57,6 +65,16 @@ class Target extends \yii\log\Target
      */
     public function export()
     {
-        $this->client->send();
+        try {
+            $this->debug && VarDumper::dump($this->client);
+            $ret = $this->client->send();
+            $this->debug && VarDumper::dump($ret);
+        } catch (Throwable $e) {
+            if ($this->debug) {
+                VarDumper::dump($e->getFile().PHP_EOL);
+                VarDumper::dump($e->getLine().PHP_EOL);
+                VarDumper::dump($e->getMessage().PHP_EOL);
+            }
+        }
     }
 }
