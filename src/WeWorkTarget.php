@@ -17,16 +17,6 @@ use Yii;
 class WeWorkTarget extends Target
 {
     /**
-     * @var WeWorkClient
-     */
-    protected $client;
-
-    /**
-     * @var TextMessage
-     */
-    protected $message;
-
-    /**
      * {@inheritDoc}
      */
     public function init()

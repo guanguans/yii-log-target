@@ -26,14 +26,9 @@ class Target extends \yii\log\Target
     public $token;
 
     /**
-     * @var string
+     * @var array
      */
-    public $secret;
-
-    /**
-     * @var string
-     */
-    public $baseUri;
+    public $messageOptions = [];
 
     /**
      * @var \Guanguans\Notify\Clients\Client
@@ -44,11 +39,6 @@ class Target extends \yii\log\Target
      * @var \Guanguans\Notify\Messages\Message
      */
     protected $message;
-
-    /**
-     * @var array
-     */
-    public $messageOptions = [];
 
     protected function getShortLogContext(): string
     {
@@ -66,15 +56,15 @@ class Target extends \yii\log\Target
     public function export()
     {
         try {
-            $this->debug && VarDumper::dump($this->client);
             $ret = $this->client->send();
+
+            $this->debug && VarDumper::dump($this->client->getRequestUrl().PHP_EOL);
+            $this->debug && VarDumper::dump($this->client->getRequestParams());
             $this->debug && VarDumper::dump($ret);
         } catch (Throwable $e) {
-            if ($this->debug) {
-                VarDumper::dump($e->getFile().PHP_EOL);
-                VarDumper::dump($e->getLine().PHP_EOL);
-                VarDumper::dump($e->getMessage().PHP_EOL);
-            }
+            $this->debug && VarDumper::dump($e->getFile().PHP_EOL);
+            $this->debug && VarDumper::dump($e->getLine().PHP_EOL);
+            $this->debug && VarDumper::dump($e->getMessage().PHP_EOL);
         }
     }
 }

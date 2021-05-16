@@ -10,23 +10,12 @@
 
 namespace Guanguans\YiiLogTarget;
 
-use Guanguans\Notify\Clients\BarkClient;
 use Guanguans\Notify\Clients\ServerChanClient;
 use Guanguans\Notify\Messages\ServerChanMessage;
 use Yii;
 
 class ServerChanTarget extends Target
 {
-    /**
-     * @var BarkClient
-     */
-    protected $client;
-
-    /**
-     * @var ServerChanMessage
-     */
-    protected $message;
-
     /**
      * {@inheritDoc}
      */

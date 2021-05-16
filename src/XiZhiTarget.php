@@ -17,14 +17,9 @@ use Yii;
 class XiZhiTarget extends Target
 {
     /**
-     * @var XiZhiClient
+     * @var string
      */
-    protected $client;
-
-    /**
-     * @var XiZhiMessage
-     */
-    protected $message;
+    public $type = 'single';
 
     /**
      * {@inheritDoc}
@@ -38,6 +33,7 @@ class XiZhiTarget extends Target
 
         $this->client = Yii::createObject(XiZhiClient::class);
         $this->client->setToken($this->token);
+        $this->client->setType($this->type);
         $this->client->setMessage($this->message);
     }
 }

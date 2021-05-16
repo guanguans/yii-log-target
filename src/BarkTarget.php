@@ -17,14 +17,9 @@ use Yii;
 class BarkTarget extends Target
 {
     /**
-     * @var BarkClient
+     * @var string
      */
-    protected $client;
-
-    /**
-     * @var BarkMessage
-     */
-    protected $message;
+    public $baseUri;
 
     /**
      * {@inheritDoc}
@@ -33,12 +28,13 @@ class BarkTarget extends Target
     {
         parent::init();
 
-        $this->message = Yii::createObject(BarkMessage::class, $this->messageOptions);
+        $this->message = Yii::createObject(BarkMessage::class);
+        $this->message->setOptions($this->messageOptions);
         $this->message->setOption('text', $this->getLogContext());
 
         $this->client = Yii::createObject(BarkClient::class);
-        $this->client->setToken($this->token);
         $this->baseUri && $this->client->setBaseUri($this->baseUri);
+        $this->client->setToken($this->token);
         $this->client->setMessage($this->message);
     }
 }
