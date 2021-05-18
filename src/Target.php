@@ -53,7 +53,7 @@ abstract class Target extends \yii\log\Target
     /**
      * @param mixed ...$parameter
      *
-     * @return mixed
+     * @return mixed|void
      */
     protected function monitor(callable $callback, ...$parameter)
     {
