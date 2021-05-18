@@ -24,16 +24,18 @@ class XiZhiTarget extends Target
     /**
      * {@inheritDoc}
      */
-    public function init()
+    public function export()
     {
-        parent::init();
+        $this->monitor(function () {
+            $this->message = Yii::createObject(XiZhiMessage::class, [$this->getShortLogContext(), $this->getLogContext()]);
+            $this->message->setOptions($this->messageOptions);
 
-        $this->message = Yii::createObject(XiZhiMessage::class, [$this->getShortLogContext(), $this->getLogContext()]);
-        $this->message->setOptions($this->messageOptions);
+            $this->client = Yii::createObject(XiZhiClient::class);
+            $this->client->setToken($this->token);
+            $this->client->setType($this->type);
+            $this->client->setMessage($this->message);
 
-        $this->client = Yii::createObject(XiZhiClient::class);
-        $this->client->setToken($this->token);
-        $this->client->setType($this->type);
-        $this->client->setMessage($this->message);
+            return $this->client->send();
+        });
     }
 }

@@ -17,4 +17,4 @@ $config = require __DIR__.'/main.php';
 
 new yii\console\Application($config);
 
-Yii::warning(sprintf('测试: %s', \Guanguans\YiiLogTarget\ChanifyTarget::class));
+Yii::error('测试');

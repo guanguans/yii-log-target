@@ -10,7 +10,7 @@
 
 namespace Guanguans\YiiLogTarget;
 
-use Guanguans\Notify\Clients\DingTalkClient;
+use Guanguans\Notify\Clients\FeiShuClient;
 use Guanguans\Notify\Messages\FeiShu\TextMessage;
 use Yii;
 
@@ -29,17 +29,19 @@ class FeiShuTarget extends Target
     /**
      * {@inheritDoc}
      */
-    public function init()
+    public function export()
     {
-        parent::init();
+        $this->monitor(function () {
+            $this->message = Yii::createObject(TextMessage::class);
+            $this->message->setOptions($this->messageOptions);
+            $this->message->setOption('text', sprintf("%s\n%s", $this->keyword, $this->getLogContext()));
 
-        $this->message = Yii::createObject(TextMessage::class);
-        $this->message->setOptions($this->messageOptions);
-        $this->message->setOption('text', sprintf("%s\n%s", $this->keyword, $this->getLogContext()));
+            $this->client = Yii::createObject(FeiShuClient::class);
+            $this->secret && $this->client->setSecret($this->secret);
+            $this->client->setToken($this->token);
+            $this->client->setMessage($this->message);
 
-        $this->client = Yii::createObject(DingTalkClient::class);
-        $this->secret && $this->client->setSecret($this->secret);
-        $this->client->setToken($this->token);
-        $this->client->setMessage($this->message);
+            return $this->client->send();
+        });
     }
 }

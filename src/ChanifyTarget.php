@@ -24,18 +24,20 @@ class ChanifyTarget extends Target
     /**
      * {@inheritDoc}
      */
-    public function init()
+    public function export()
     {
-        parent::init();
+        $this->monitor(function () {
+            $this->message = Yii::createObject(TextMessage::class);
+            $this->message->setOptions($this->messageOptions);
+            // $this->message->setOption('title', $this->getShortLogContext());
+            $this->message->setOption('text', $this->getShortLogContext());
 
-        $this->message = Yii::createObject(TextMessage::class);
-        $this->message->setOptions($this->messageOptions);
-        $this->message->setOption('title', $this->getShortLogContext());
-        $this->message->setOption('text', $this->getLogContext());
+            $this->client = Yii::createObject(ChanifyClient::class);
+            $this->baseUri && $this->client->setBaseUri($this->baseUri);
+            $this->client->setToken($this->token);
+            $this->client->setMessage($this->message);
 
-        $this->client = Yii::createObject(ChanifyClient::class);
-        $this->baseUri && $this->client->setBaseUri($this->baseUri);
-        $this->client->setToken($this->token);
-        $this->client->setMessage($this->message);
+            return $this->client->send();
+        });
     }
 }

@@ -19,16 +19,18 @@ class WeWorkTarget extends Target
     /**
      * {@inheritDoc}
      */
-    public function init()
+    public function export()
     {
-        parent::init();
+        $this->monitor(function () {
+            $this->message = Yii::createObject(TextMessage::class);
+            $this->message->setOptions($this->messageOptions);
+            $this->message->setOption('content', $this->getLogContext());
 
-        $this->message = Yii::createObject(TextMessage::class);
-        $this->message->setOptions($this->messageOptions);
-        $this->message->setOption('content', $this->getLogContext());
+            $this->client = Yii::createObject(WeWorkClient::class);
+            $this->client->setToken($this->token);
+            $this->client->setMessage($this->message);
 
-        $this->client = Yii::createObject(WeWorkClient::class);
-        $this->client->setToken($this->token);
-        $this->client->setMessage($this->message);
+            return $this->client->send();
+        });
     }
 }

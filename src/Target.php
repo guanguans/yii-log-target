@@ -13,7 +13,7 @@ namespace Guanguans\YiiLogTarget;
 use Throwable;
 use yii\helpers\VarDumper;
 
-class Target extends \yii\log\Target
+abstract class Target extends \yii\log\Target
 {
     /**
      * @var bool
@@ -42,7 +42,7 @@ class Target extends \yii\log\Target
 
     protected function getShortLogContext(): string
     {
-        return isset($this->messages[0]) ? $this->formatMessage($this->messages[0]) : '';
+        return $this->formatMessage($this->messages[0]);
     }
 
     protected function getLogContext(): string
@@ -51,16 +51,24 @@ class Target extends \yii\log\Target
     }
 
     /**
-     * {@inheritDoc}
+     * @param mixed ...$parameter
+     *
+     * @return mixed
      */
-    public function export()
+    protected function monitor(callable $callback, ...$parameter)
     {
         try {
-            $ret = $this->client->send();
+            if (YII_ENV !== 'prod' && ! $this->debug) {
+                return;
+            }
 
-            $this->debug && VarDumper::dump($this->client->getRequestUrl().PHP_EOL);
-            $this->debug && VarDumper::dump($this->client->getRequestParams());
+            $ret = call_user_func($callback, ...$parameter);
+
+            // $this->debug && VarDumper::dump($this->client->getRequestUrl().PHP_EOL);
+            // $this->debug && VarDumper::dump($this->client->getRequestParams());
             $this->debug && VarDumper::dump($ret);
+
+            return $ret;
         } catch (Throwable $e) {
             $this->debug && VarDumper::dump($e->getFile().PHP_EOL);
             $this->debug && VarDumper::dump($e->getLine().PHP_EOL);
