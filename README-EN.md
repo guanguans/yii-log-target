@@ -13,20 +13,20 @@
 [![Total Downloads](https://poser.pugx.org/guanguans/yii-log-target/downloads)](//packagist.org/packages/guanguans/yii-log-target)
 [![License](https://poser.pugx.org/guanguans/yii-log-target/license)](//packagist.org/packages/guanguans/yii-log-target)
 
-## 环境要求
+## Requirement
 
 * PHP >= 7.2
 * yiisoft/yii2 > 2.0
 
-## 安装
+## Installation
 
 ``` bash
 $ composer require guanguans/yii-log-target --prefer-dist -vvv
 ```
 
-## 配置
+## Configuration
 
-Yii2 配置文件 `config/main.php` 的日志组件中配置:
+Add to the log components of the Yii2 configuration file `config/main.php`:
 
 ``` php
 'log' => [
@@ -100,35 +100,35 @@ Yii2 配置文件 `config/main.php` 的日志组件中配置:
 ],
 ```
 
-## 使用
+## Usage
 
 ``` php
-Yii::error('测试');
+Yii::error('test');
 ```
 
-## 测试
+## Testing
 
 ``` bash
 $ composer test
 ```
 
-## 变更日志
+## Changelog
 
-请参阅 [CHANGELOG](CHANGELOG.md) 获取最近有关更改的更多信息。
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## 贡献指南
+## Contributing
 
-请参阅 [CONTRIBUTING](.github/CONTRIBUTING.md) 有关详细信息。
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
-## 安全漏洞
+## Security Vulnerabilities
 
-请查看[我们的安全政策](../../security/policy)了解如何报告安全漏洞。
+Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
-## 贡献者
+## Credits
 
 * [guanguans](https://github.com/guanguans)
-* [所有贡献者](../../contributors)
+* [All Contributors](../../contributors)
 
-## 协议
+## License
 
-MIT 许可证（MIT）。有关更多信息，请参见[协议文件](LICENSE)。
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
