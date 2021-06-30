@@ -2,9 +2,7 @@
 
 [简体中文](README.md) | [ENGLISH](README-EN.md)
 
-> A `yii-log-target` of collection(Bark、Chanify、DingTalk、FeiShu、ServerChan、WeWork、XiZhi). - 集合了多种 `yii-log-target`(Bark、Chanify、钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)。
-
-> Monitor system error exception and send error exception notification through multiple channels. - 监控系统错误异常并且多渠道发送错误异常信息通知。
+> Multiple channels of Yii exception notification(Bark、Chanify、DingTalk、FeiShu、ServerChan、WeWork、XiZhi). - 多种通道的 Yii 异常通知(Bark、Chanify、钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)。
 
 [![Tests](https://github.com/guanguans/yii-log-target/workflows/Tests/badge.svg)](https://github.com/guanguans/yii-log-target/actions)
 [![Check & fix styling](https://github.com/guanguans/yii-log-target/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/yii-log-target/actions)
