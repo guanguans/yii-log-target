@@ -107,6 +107,8 @@ Add to the log components of the Yii2 configuration file `config/main.php`:
 Yii::error('test');
 ```
 
+![example](./docs/example.png)
+
 ## Testing
 
 ``` bash

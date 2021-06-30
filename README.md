@@ -107,6 +107,8 @@ Yii2 配置文件 `config/main.php` 的日志组件中配置:
 Yii::error('测试');
 ```
 
+![example](./docs/example.png)
+
 ## 测试
 
 ``` bash
