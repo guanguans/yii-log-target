@@ -11,6 +11,7 @@
 namespace Guanguans\YiiLogTarget;
 
 use Throwable;
+use Yii;
 use yii\helpers\VarDumper;
 
 abstract class Target extends \yii\log\Target
@@ -19,6 +20,21 @@ abstract class Target extends \yii\log\Target
      * @var bool
      */
     public $debug = false;
+
+    /**
+     * @var string
+     */
+    public $debugLogFile = '@runtime/logs/debug-exception-target.log';
+
+    /**
+     * @var string[]
+     */
+    public $excludeExceptions = [];
+
+    /**
+     * @var string[]
+     */
+    public $envs = ['prod'];
 
     /**
      * @var string
@@ -47,7 +63,46 @@ abstract class Target extends \yii\log\Target
 
     protected function getLogContext(): string
     {
-        return implode("\n", array_map([$this, 'formatMessage'], $this->messages));
+        return implode(PHP_EOL, array_map([$this, 'formatMessage'], $this->messages));
+    }
+
+    /**
+     * @param string|null $logFile
+     */
+    public function normalizeLogFile($logFile): string
+    {
+        if (null === $logFile) {
+            return Yii::$app->getRuntimePath().'/logs/debug-exception-target.log';
+        }
+
+        return Yii::getAlias($logFile);
+    }
+
+    protected function shouldExecute(): bool
+    {
+        if (! in_array(YII_ENV, $this->envs)) {
+            return false;
+        }
+
+        if (isset($this->messages[0][0]) && is_object($this->messages[0][0])) {
+            foreach ($this->excludeExceptions as $exceptionClass) {
+                if ($this->messages[0][0] instanceof $exceptionClass) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return false|int
+     */
+    protected function writeLog($data)
+    {
+        return file_put_contents($this->normalizeLogFile($this->debugLogFile), VarDumper::dumpAsString($data).PHP_EOL, FILE_APPEND);
     }
 
     /**
@@ -58,21 +113,21 @@ abstract class Target extends \yii\log\Target
     protected function monitor(callable $callback, ...$parameter)
     {
         try {
-            if (YII_ENV !== 'prod' && ! $this->debug) {
+            if (! $this->shouldExecute()) {
                 return;
             }
 
             $ret = call_user_func($callback, ...$parameter);
 
-            // $this->debug && VarDumper::dump($this->client->getRequestUrl().PHP_EOL);
-            // $this->debug && VarDumper::dump($this->client->getRequestParams());
-            $this->debug && VarDumper::dump($ret);
+            if ($this->debug) {
+                $this->writeLog($this->client->getRequestUrl());
+                $this->writeLog($this->client->getRequestParams());
+                $this->writeLog($ret);
+            }
 
             return $ret;
         } catch (Throwable $e) {
-            $this->debug && VarDumper::dump($e->getFile().PHP_EOL);
-            $this->debug && VarDumper::dump($e->getLine().PHP_EOL);
-            $this->debug && VarDumper::dump($e->getMessage().PHP_EOL);
+            $this->debug && $this->writeLog($e);
         }
     }
 }
