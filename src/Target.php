@@ -10,12 +10,21 @@
 
 namespace Guanguans\YiiLogTarget;
 
+use Guanguans\YiiLogTarget\Traits\ExceptionContext;
 use Throwable;
 use Yii;
 use yii\helpers\VarDumper;
 
 abstract class Target extends \yii\log\Target
 {
+    use ExceptionContext;
+
+    protected const MARKDOWN_TEMPLATE = <<<'md'
+```plain text
+%s
+```
+md;
+
     /**
      * @var bool
      */
@@ -63,7 +72,12 @@ abstract class Target extends \yii\log\Target
 
     protected function getLogContext(): string
     {
-        return implode(PHP_EOL, array_map([$this, 'formatMessage'], $this->messages));
+        $context = implode(PHP_EOL, array_map([$this, 'formatMessage'], $this->messages));
+        if (isset($this->messages[0][0]) && $this->messages[0][0] instanceof Throwable) {
+            $context .= PHP_EOL.PHP_EOL.$this->getContextAsString($this->messages[0][0]);
+        }
+
+        return $context;
     }
 
     /**

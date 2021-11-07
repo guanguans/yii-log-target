@@ -27,7 +27,7 @@ class XiZhiTarget extends Target
     public function export()
     {
         $this->monitor(function () {
-            $this->message = Yii::createObject(XiZhiMessage::class, [$this->getShortLogContext(), $this->getLogContext()]);
+            $this->message = Yii::createObject(XiZhiMessage::class, [$this->getShortLogContext(), sprintf(self::MARKDOWN_TEMPLATE, $this->getLogContext())]);
             $this->message->setOptions($this->messageOptions);
 
             $this->client = Yii::createObject(XiZhiClient::class);
