@@ -34,7 +34,7 @@ abstract class Target extends \yii\log\Target
     /**
      * @var string[]
      */
-    public $envs = ['prod'];
+    public $envs = ['*'];
 
     /**
      * @var string
@@ -80,19 +80,26 @@ abstract class Target extends \yii\log\Target
 
     protected function shouldExecute(): bool
     {
-        if (! in_array(YII_ENV, $this->envs)) {
-            return false;
+        return ! $this->shouldntExecute();
+    }
+
+    protected function shouldntExecute(): bool
+    {
+        if (! in_array(YII_ENV, $this->envs) && ! in_array('*', $this->envs)) {
+            return true;
         }
 
-        if (isset($this->messages[0][0]) && is_object($this->messages[0][0])) {
-            foreach ($this->excludeExceptions as $exceptionClass) {
-                if ($this->messages[0][0] instanceof $exceptionClass) {
-                    return false;
-                }
+        if (! isset($this->messages[0][0])) {
+            return true;
+        }
+
+        foreach ($this->excludeExceptions as $exceptionClass) {
+            if ($this->messages[0][0] instanceof $exceptionClass) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -113,7 +120,7 @@ abstract class Target extends \yii\log\Target
     protected function monitor(callable $callback, ...$parameter)
     {
         try {
-            if (! $this->shouldExecute()) {
+            if ($this->shouldntExecute()) {
                 return;
             }
 
