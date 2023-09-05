@@ -11,8 +11,6 @@
 namespace Guanguans\YiiLogTarget;
 
 use Guanguans\YiiLogTarget\Traits\ExceptionContext;
-use Throwable;
-use Yii;
 use yii\helpers\VarDumper;
 
 abstract class Target extends \yii\log\Target
@@ -73,7 +71,7 @@ md;
     protected function getLogContext(): string
     {
         $context = implode(PHP_EOL, array_map([$this, 'formatMessage'], $this->messages));
-        if (isset($this->messages[0][0]) && $this->messages[0][0] instanceof Throwable) {
+        if (isset($this->messages[0][0]) && $this->messages[0][0] instanceof \Throwable) {
             $context .= PHP_EOL.PHP_EOL.$this->getContextAsString($this->messages[0][0]);
         }
 
@@ -86,10 +84,10 @@ md;
     public function normalizeLogFile($logFile): string
     {
         if (null === $logFile) {
-            return Yii::$app->getRuntimePath().'/logs/debug-exception-target.log';
+            return \Yii::$app->getRuntimePath().'/logs/debug-exception-target.log';
         }
 
-        return Yii::getAlias($logFile);
+        return \Yii::getAlias($logFile);
     }
 
     protected function shouldExecute(): bool
@@ -117,8 +115,6 @@ md;
     }
 
     /**
-     * @param mixed $data
-     *
      * @return false|int
      */
     protected function writeLog($data)
@@ -127,8 +123,6 @@ md;
     }
 
     /**
-     * @param mixed ...$parameter
-     *
      * @return mixed|void
      */
     protected function monitor(callable $callback, ...$parameter)
@@ -147,7 +141,7 @@ md;
             }
 
             return $ret;
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $this->debug && $this->writeLog($e);
         }
     }

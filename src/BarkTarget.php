@@ -12,7 +12,6 @@ namespace Guanguans\YiiLogTarget;
 
 use Guanguans\Notify\Clients\BarkClient;
 use Guanguans\Notify\Messages\BarkMessage;
-use Yii;
 
 class BarkTarget extends Target
 {
@@ -21,17 +20,14 @@ class BarkTarget extends Target
      */
     public $baseUri;
 
-    /**
-     * {@inheritDoc}
-     */
     public function export()
     {
         $this->monitor(function () {
-            $this->message = Yii::createObject(BarkMessage::class);
+            $this->message = \Yii::createObject(BarkMessage::class);
             $this->message->setOptions($this->messageOptions);
             $this->message->setOption('text', $this->getShortLogContext());
 
-            $this->client = Yii::createObject(BarkClient::class);
+            $this->client = \Yii::createObject(BarkClient::class);
             $this->baseUri && $this->client->setBaseUri($this->baseUri);
             $this->client->setToken($this->token);
             $this->client->setMessage($this->message);

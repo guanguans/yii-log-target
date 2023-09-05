@@ -10,8 +10,6 @@
 
 namespace Guanguans\YiiLogTarget\Traits;
 
-use Throwable;
-
 trait ExceptionContext
 {
     /**
@@ -19,7 +17,7 @@ trait ExceptionContext
      *
      * @return string
      */
-    public function getContextAsString(Throwable $exception)
+    public function getContextAsString(\Throwable $exception)
     {
         $context = $this->getContext($exception);
 
@@ -30,16 +28,16 @@ trait ExceptionContext
         $maxLineLen = max(strlen(array_key_last($context)), strlen($markedExceptionLine));
 
         $contextString = PHP_EOL.array_reduces(
-                $context,
-                function ($carry, $code, $line) use ($maxLineLen, $exceptionLine, $markedExceptionLine) {
-                    $line === $exceptionLine and $line = $markedExceptionLine;
+            $context,
+            function ($carry, $code, $line) use ($maxLineLen, $exceptionLine, $markedExceptionLine) {
+                $line === $exceptionLine and $line = $markedExceptionLine;
 
-                    $line = str_pad($line, $maxLineLen, ' ', STR_PAD_LEFT);
+                $line = str_pad($line, $maxLineLen, ' ', STR_PAD_LEFT);
 
-                    return "$carry    $line    $code".PHP_EOL;
-                },
-                ''
-            );
+                return "$carry    $line    $code".PHP_EOL;
+            },
+            ''
+        );
 
         return sprintf('[%s]', $contextString);
     }
@@ -49,7 +47,7 @@ trait ExceptionContext
      *
      * @return array
      */
-    public function getContext(Throwable $exception)
+    public function getContext(\Throwable $exception)
     {
         return $this->getEvalContext($exception) ?? $this->getFileContext($exception);
     }
@@ -59,7 +57,7 @@ trait ExceptionContext
      *
      * @return array|null
      */
-    protected function getEvalContext(Throwable $exception)
+    protected function getEvalContext(\Throwable $exception)
     {
         if (str_contains($exception->getFile(), "eval()'d code")) {
             return [
@@ -73,7 +71,7 @@ trait ExceptionContext
      *
      * @return array
      */
-    protected function getFileContext(Throwable $exception)
+    protected function getFileContext(\Throwable $exception)
     {
         $context = explode("\n", file_get_contents($exception->getFile()));
 

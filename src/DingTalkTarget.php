@@ -12,7 +12,6 @@ namespace Guanguans\YiiLogTarget;
 
 use Guanguans\Notify\Clients\DingTalkClient;
 use Guanguans\Notify\Messages\DingTalk\TextMessage;
-use Yii;
 
 class DingTalkTarget extends Target
 {
@@ -26,17 +25,14 @@ class DingTalkTarget extends Target
      */
     public $keyword;
 
-    /**
-     * {@inheritDoc}
-     */
     public function export()
     {
         $this->monitor(function () {
-            $this->message = Yii::createObject(TextMessage::class);
+            $this->message = \Yii::createObject(TextMessage::class);
             $this->message->setOptions($this->messageOptions);
             $this->message->setOption('content', sprintf("%s\n%s", $this->keyword, $this->getLogContext()));
 
-            $this->client = Yii::createObject(DingTalkClient::class);
+            $this->client = \Yii::createObject(DingTalkClient::class);
             $this->secret && $this->client->setSecret($this->secret);
             $this->client->setToken($this->token);
             $this->client->setMessage($this->message);

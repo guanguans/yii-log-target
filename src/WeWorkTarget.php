@@ -12,21 +12,17 @@ namespace Guanguans\YiiLogTarget;
 
 use Guanguans\Notify\Clients\WeWorkClient;
 use Guanguans\Notify\Messages\WeWork\TextMessage;
-use Yii;
 
 class WeWorkTarget extends Target
 {
-    /**
-     * {@inheritDoc}
-     */
     public function export()
     {
         $this->monitor(function () {
-            $this->message = Yii::createObject(TextMessage::class);
+            $this->message = \Yii::createObject(TextMessage::class);
             $this->message->setOptions($this->messageOptions);
             $this->message->setOption('content', $this->getLogContext());
 
-            $this->client = Yii::createObject(WeWorkClient::class);
+            $this->client = \Yii::createObject(WeWorkClient::class);
             $this->client->setToken($this->token);
             $this->client->setMessage($this->message);
 
