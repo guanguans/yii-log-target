@@ -23,7 +23,7 @@ $config = [
 
                 // Bark
                 [
-                    'class' => \Guanguans\YiiLogTarget\BarkTarget::class,
+                    'class' => Guanguans\YiiLogTarget\BarkTarget::class,
                     'levels' => ['error'],
                     // 'debug' => true,
                     'token' => 'PXb8KDj9dHStfQ5cGJ5',
@@ -31,7 +31,7 @@ $config = [
 
                 // Chanify
                 [
-                    'class' => \Guanguans\YiiLogTarget\ChanifyTarget::class,
+                    'class' => Guanguans\YiiLogTarget\ChanifyTarget::class,
                     'levels' => ['error'],
                     // 'debug' => true,
                     'token' => 'P3IgGEiJBQVdIWlVKS1JORVY0UlVETFZYVVpRTlNLTlVZVlZPT1JFGhR7vAyf8Uj5UQhhK4n6QfVzih96QyIECAEQAQ.G4z2i0VZP7lOiCKYif4LOXu3cBdizl-PLWYn_7zrGXQ',
@@ -39,7 +39,7 @@ $config = [
 
                 // 钉钉群机器人
                 [
-                    'class' => \Guanguans\YiiLogTarget\DingTalkTarget::class,
+                    'class' => Guanguans\YiiLogTarget\DingTalkTarget::class,
                     'levels' => ['error'],
                     // 'debug'   => true,
                     'keyword' => 'keyword',
@@ -49,7 +49,7 @@ $config = [
 
                 // 飞书群机器人
                 [
-                    'class' => \Guanguans\YiiLogTarget\FeiShuTarget::class,
+                    'class' => Guanguans\YiiLogTarget\FeiShuTarget::class,
                     'levels' => ['error'],
                     // 'debug'   => true,
                     'keyword' => 'keyword',
@@ -59,7 +59,7 @@ $config = [
 
                 // Server 酱
                 [
-                    'class' => \Guanguans\YiiLogTarget\ServerChanTarget::class,
+                    'class' => Guanguans\YiiLogTarget\ServerChanTarget::class,
                     'levels' => ['error'],
                     // 'debug'   => true,
                     'token' => '35149Thtf1g2Bc14QJuQ6HFpW5YGXm',
@@ -67,7 +67,7 @@ $config = [
 
                 // 企业微信群机器人
                 [
-                    'class' => \Guanguans\YiiLogTarget\WeWorkTarget::class,
+                    'class' => Guanguans\YiiLogTarget\WeWorkTarget::class,
                     'levels' => ['error'],
                     // 'debug'   => true,
                     'token' => '3d5a3-ceff-4da8-bcf3-ff5891778fb7',
@@ -75,7 +75,7 @@ $config = [
 
                 // 息知
                 [
-                    'class' => \Guanguans\YiiLogTarget\XiZhiTarget::class,
+                    'class' => Guanguans\YiiLogTarget\XiZhiTarget::class,
                     'levels' => ['error'],
                     // 'debug'   => true,
                     'token' => '60aea56567ae39a1b1920cbc42bb5bd',
